@@ -1,0 +1,5 @@
+.vscode
+.clangd/
+build/
+docs/
+compile_commands.json
