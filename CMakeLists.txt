@@ -5,6 +5,11 @@ include_directories(
     "src"
 )
 
+add_executable(
+    example_stack
+    "examples/example_stack.c"
+)
+
 if(ENABLE_TESTS)
     find_package(CMOCKA REQUIRED)
     enable_testing()

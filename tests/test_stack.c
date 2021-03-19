@@ -20,13 +20,19 @@ int main()
 
 void test_stack(void **state)
 {
-	cds_stack(int) is;
-	cds_stack_push(is, 10);
-	cds_stack_push(is, 20);
-	cds_stack_push(is, 30);
+	typedef cds_stack(int) stackint_t;
+	stackint_t s1;
 
-	if (cds_stack_valid(is)) {
-		int a = cds_stack_top(is);
+	cds_stack_init(s1);
+
+	cds_stack_push(s1, 10);
+	cds_stack_push(s1, 20);
+	cds_stack_push(s1, 30);
+
+	if (cds_stack_valid(s1)) {
+		int a = cds_stack_top(s1);
 		assert_int_equal(a, 30);
 	}
+
+	cds_stack_free(s1);
 }
