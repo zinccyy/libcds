@@ -13,7 +13,7 @@
  *
  */
 #define cds_stack(type)                                                                                                \
-	struct stack##type {                                                                                           \
+	struct stack_##type {                                                                                          \
 		type tf;                                                                                               \
 		type *mem;                                                                                             \
 		uint64_t s;                                                                                            \

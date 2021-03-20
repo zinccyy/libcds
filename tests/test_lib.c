@@ -1,0 +1,82 @@
+#include "libcds/hash_table.h"
+#include <libcds.h>
+#include <stdarg.h>
+#include <stdlib.h>
+#include <stddef.h>
+#include <setjmp.h>
+#include <cmocka.h>
+#include <stdio.h>
+
+void test_stack(void **state);
+void test_linked_list(void **state);
+void test_hash_table(void **state);
+
+int main()
+{
+	const struct CMUnitTest test_groups[] = {
+		cmocka_unit_test(test_stack),
+		cmocka_unit_test(test_linked_list),
+		cmocka_unit_test(test_hash_table),
+	};
+
+	// results of group testing
+	return cmocka_run_group_tests(test_groups, 0, 0);
+	return 0;
+}
+
+void test_stack(void **state)
+{
+	typedef cds_stack(int) stackint_t;
+	stackint_t s1;
+
+	cds_stack_init(s1);
+
+	cds_stack_push(s1, 10);
+	cds_stack_push(s1, 20);
+	cds_stack_push(s1, 30);
+
+	if (cds_stack_valid(s1)) {
+		int a = cds_stack_top(s1);
+		assert_int_equal(a, 30);
+	}
+
+	cds_stack_free(s1);
+}
+
+void test_linked_list(void **state)
+{
+	typedef cds_linked_list(int) dll_int_t;
+
+	dll_int_t il;
+	cds_linked_list_init(il);
+
+	cds_linked_list_add_last(il, 10);
+	cds_linked_list_add_last(il, 20);
+	cds_linked_list_add_first(il, 30);
+
+	cds_linked_list_free(il);
+}
+
+void test_hash_table(void **state)
+{
+	typedef cds_hash_table_entry(int) hte_int_t;
+	typedef cds_hash_table(hte_int_t) ht_int_t;
+
+	ht_int_t ht;
+
+	cds_hash_table_init(ht);
+
+	cds_hash_table_add(ht, "key1", 10);
+	cds_hash_table_add(ht, "key2", 20);
+	cds_hash_table_add(ht, "key3", 30);
+
+	hte_int_t *e = NULL;
+
+	cds_hash_table_get(ht, "key2", e);
+
+	assert_non_null(e);
+
+	printf("[e]: %s = %d\n", e->k, e->v);
+
+	cds_hash_table_free(ht);
+}

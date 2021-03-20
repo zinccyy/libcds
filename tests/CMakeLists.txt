@@ -1,5 +1,5 @@
 # Add tests
-# test_stack
-add_executable(test_stack test_stack.c)
-add_test(NAME test_stack COMMAND test_stack)
-target_link_libraries(test_stack cmocka)
+# test_lib
+add_executable(test_lib test_lib.c)
+add_test(NAME test_lib COMMAND test_lib)
+target_link_libraries(test_lib ${PROJECT_NAME} cmocka)
