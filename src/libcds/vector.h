@@ -11,7 +11,7 @@
  *
  */
 #define cds_vector(type)                                                                                               \
-    struct cds_vec_##type                                                                                              \
+    struct cds_vector_##type                                                                                           \
     {                                                                                                                  \
         type tf;                                                                                                       \
         type *mem;                                                                                                     \
