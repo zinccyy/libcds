@@ -7,53 +7,57 @@
 #define CDS_STACK_INCR 8
 
 /**
- * Use as 'cds_stack(int) il;' to create a stack
+ * use as 'cds_stack(int) is;' to create a stack
  *
- * @param[in]   	type		Stack type
+ * @param[in]   	type		stack type
  *
  */
 #define cds_stack(type)                                                                                                \
-	struct stack_##type {                                                                                          \
-		type tf;                                                                                               \
-		type *mem;                                                                                             \
-		uint64_t s;                                                                                            \
-		uint64_t t;                                                                                            \
-	}
+    struct stack_##type                                                                                                \
+    {                                                                                                                  \
+        type tf;                                                                                                       \
+        type *mem;                                                                                                     \
+        uint64_t s;                                                                                                    \
+        uint64_t t;                                                                                                    \
+    }
 
 /**
- * Initializes given stack fields to 0
+ * initializes given stack fields to 0
  *
- * @param[in]		st		Stack to init
+ * @param[in]		st		stack to init
  *
  */
 #define cds_stack_init(st)                                                                                             \
-	do {                                                                                                           \
-		(st).s = 0;                                                                                            \
-		(st).t = 0;                                                                                            \
-		(st).mem = NULL;                                                                                       \
-	} while (0)
+    do                                                                                                                 \
+    {                                                                                                                  \
+        (st).s = 0;                                                                                                    \
+        (st).t = 0;                                                                                                    \
+        (st).mem = NULL;                                                                                               \
+    } while (0)
 
 /**
- * Push a given element to the stack
+ * push a given element to the stack
  *
- * @param[in]		st		Stack to use
- * @param[in]		elem		Element to push on stack
+ * @param[in]		st			stack to use
+ * @param[in]		elem		element to push on stack
  *
  */
 #define cds_stack_push(st, elem)                                                                                       \
-	do {                                                                                                           \
-		if ((st).t == (st).s) {                                                                                \
-			(st).s += CDS_STACK_INCR;                                                                      \
-			(st).mem = realloc((st).mem, sizeof(typeof(((st).tf))) * ((st).s));                            \
-		}                                                                                                      \
-		(st).mem[(st).t] = elem;                                                                               \
-		(st).t += 1;                                                                                           \
-	} while (0)
+    do                                                                                                                 \
+    {                                                                                                                  \
+        if ((st).t == (st).s)                                                                                          \
+        {                                                                                                              \
+            (st).s += CDS_STACK_INCR;                                                                                  \
+            (st).mem = realloc((st).mem, sizeof(typeof(((st).tf))) * ((st).s));                                        \
+        }                                                                                                              \
+        (st).mem[(st).t] = elem;                                                                                       \
+        (st).t += 1;                                                                                                   \
+    } while (0)
 
 /**
- * Check if a given stack is valid for use
+ * check if a given stack is valid for use
  *
- * @param[in]		st		Stack to check
+ * @param[in]		st			stack to check
  *
  * @param[out]		valid		1 if stack is valid, 0 otherwise
  *
@@ -61,38 +65,41 @@
 #define cds_stack_valid(st) ((st).mem != NULL && (st).t > 0)
 
 /**
- * Get the top element of the stack - first the user needs to check wether a given stack is valid
+ * get the top element of the stack - first the user needs to check wether a given stack is valid
  *
- * @param[in]		st		Stack to use
+ * @param[in]		st		stack to use
  *
- * @param[out]		t		Top element
+ * @param[out]		t		top element
  *
  */
 #define cds_stack_top(st) ((st).mem[(st).t - 1])
 
 /**
- * Pops the last element from the stack if possible -> if top > 0
+ * pops the last element from the stack if possible -> if top > 0
  *
- * @param[in]		st		Stack to use
+ * @param[in]		st		stack to use
  *
  */
 #define cds_stack_pop(st)                                                                                              \
-	do {                                                                                                           \
-		if ((st).t > 0) {                                                                                      \
-			(st).t--;                                                                                      \
-		}                                                                                                      \
-	} while (0)
+    do                                                                                                                 \
+    {                                                                                                                  \
+        if ((st).t > 0)                                                                                                \
+        {                                                                                                              \
+            (st).t--;                                                                                                  \
+        }                                                                                                              \
+    } while (0)
 
 /**
- * Frees the given stack memory
+ * frees the given stack memory
  *
- * @param[in]		st		Stack to free
+ * @param[in]		st		stack to free
  *
  */
 #define cds_stack_free(st)                                                                                             \
-	do {                                                                                                           \
-		free((st).mem);                                                                                        \
-		cds_stack_init(st);                                                                                    \
-	} while (0)
+    do                                                                                                                 \
+    {                                                                                                                  \
+        free((st).mem);                                                                                                \
+        cds_stack_init(st);                                                                                            \
+    } while (0)
 
 #endif // LIBCDS_STACK_H_ONCE

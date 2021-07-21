@@ -9,11 +9,12 @@
  */
 int cds_hash_table_calc_pos(char *k)
 {
-	int pos = 0;
-	char *k_ptr = 0;
-	for (k_ptr = k; *k != 0; k++) {
-		pos += (int)(*k);
-	}
-	pos %= CDS_HASH_TABLE_SIZE;
-	return pos;
+    int pos = 0;
+    char *k_ptr = 0;
+    for (k_ptr = k; *k != 0; k++)
+    {
+        pos += (int)(*k);
+    }
+    pos %= CDS_HASH_TABLE_SIZE;
+    return pos;
 }
