@@ -7,6 +7,7 @@ include_directories(
 
 add_library(
     ${PROJECT_NAME}
+    SHARED
     "src/libcds/hash_table.c"
 )
 
